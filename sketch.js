@@ -1,16 +1,17 @@
+let myImage;
+
 function preload() {
-	// put preload code here
+	myImage = loadImage("/assets/template.png")
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	// put setup code here
-	const message = "This is a template reposotory\nfor the course elective Creative Coding\nCommunication Design, Politecnico di Milano";
-	textAlign(CENTER, CENTER);
-  textSize(16)
-	text(message, width/2, height/2);
+	background("brown");
+	
 }
 
 function draw() {
-	// put drawing code here
+	translate(width/2, height/2);
+	imageMode(CENTER);
+	image(myImage, 0, 0, myImage.width/2, myImage.height/2);
 }
