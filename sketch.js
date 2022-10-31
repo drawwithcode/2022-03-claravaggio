@@ -2,7 +2,7 @@
 //this is a game, everytime you play it the sketch randomly assign you a different poster with different characteristics
 //there is an audio that starts when the game gives you the sentence
 
-let button, button2; 
+let button, button2, button3; 
 let input;
 let myBackground;
 let song;
@@ -32,7 +32,7 @@ function setup() {
 	screen = createCanvas(windowWidth, windowHeight);
 	rectMode(CENTER);
 	translate(width/2, height/2);
-	background("#696a6d");
+	background("#006666");
 	
 	fill("white");
 	textSize(30);
@@ -44,14 +44,14 @@ function setup() {
 	pop();
 
 	myCapture = createCapture(VIDEO);
-		 myCapture.hide();
+	myCapture.hide();
 	
 	text("What crime would you be wanted for?", 0, 100, 400, 300);
 	
 	button = createButton('click to find out');
 	button.style('font-size', '20px');
 	button.style('font-family', 'Rye');
-  	button.style('background-color', '#cd7f62');
+  	button.style('background-color', '#e3691e');
 	button.size(300,80);
   	button.position(width/2 - 150, 400);
   	button.mousePressed(change);
@@ -64,18 +64,18 @@ function draw() {
 	//analizing phase
 	if (start == true) {
 		button.remove();
-		background("#cd7f62");
+		background("#e3691e");
 		text("Analizing your face... smile!", 0 ,0);
 		push();
 		rectMode(CORNER);
 		rect(-100, 100, 200, 20);
-		fill("#696a6d");
+		fill("#006666");
 		rect(-100, 100, dimRect, 20);
 		dimRect += 1;
 		pop();
 	
 	//results
-	if (dimRect == 210) {
+	if (dimRect == 200) {
 		start = false;
 
 		background(myBackground);
@@ -87,14 +87,18 @@ function draw() {
 		button2 = createButton('click to write your name');
 		button2.style('font-size', '20px');
 		button2.style('font-family', 'Rye');
-		button2.style('background-color', 'none');
 		button2.style('color', 'grey');
 		button2.size(300,-80);
 		button2.position(width/2 - 150, 220);
 		button2.mousePressed(writeName);
 
-		fill("#4c402e");
-		sToSave = text("Press 'S' to save your poster", 0, -height/2.3);
+		//I did a button so when you save the screen it will not appear in the image
+		button3 = createButton("Press 'S' to save your poster");
+		button3.style('font-size', '20px');
+		button3.style('font-family', 'Rye');
+		button3.style('color', '#08443e');
+		button3.size(400,-80);
+		button3.position(width/2 - 200, 20);
 
   		scale(-1, 1);
   		image(myCapture, 0, 0, myCapture.width/3, myCapture.height/3);
@@ -116,8 +120,8 @@ function writeName() {
 		 input.size(300, 20)
 }
 
-//write the input when enter is pressed
 function keyPressed() {
+	//write the input when enter is pressed
 	if (keyCode === ENTER) {
 		console.log("yes");
 		let name = input.value();
