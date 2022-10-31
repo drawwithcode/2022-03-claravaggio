@@ -5,7 +5,7 @@ let dimRect = 0;
 let myCapture;
 
 function preload() {
-	myImage = loadImage("/assets/template2.png")
+	myImage = loadImage("./assets/template2.png")
 }
 
 function setup() {
