@@ -1,5 +1,12 @@
-let button, button2, input;
+//this sketch is made by Clara Di Bella
+//this is a game, everytime you play it the sketch randomly assign you a different poster with different characteristics
+//there is an audio that starts when the game gives you the sentence
+
+let button, button2; 
+let input;
 let myBackground;
+let song;
+let sToSave;
 let template = [];
 let start = false;
 let dimRect = 0;
@@ -17,13 +24,15 @@ function preload() {
 	template[7] = loadImage("./assets/template8.png");
 	template[8] = loadImage("./assets/template9.png");
 	template[9] = loadImage("./assets/template10.png");
+
+	song = loadSound("./assets/narcos.mp3");
 }
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	screen = createCanvas(windowWidth, windowHeight);
 	rectMode(CENTER);
 	translate(width/2, height/2);
-	background(0);
+	background("#696a6d");
 	
 	fill("white");
 	textSize(30);
@@ -42,34 +51,36 @@ function setup() {
 	button = createButton('click to find out');
 	button.style('font-size', '20px');
 	button.style('font-family', 'Rye');
-  	button.style('background-color', 'red');
+  	button.style('background-color', '#cd7f62');
 	button.size(300,80);
   	button.position(width/2 - 150, 400);
   	button.mousePressed(change);
-	
 }
 
 function draw() {
-	
 	noStroke();
 	translate(width/2, height/2);
 	
+	//analizing phase
 	if (start == true) {
 		button.remove();
-		background("brown");
+		background("#cd7f62");
 		text("Analizing your face... smile!", 0 ,0);
 		push();
 		rectMode(CORNER);
-		rect(-200, 100, 400, 20);
-		fill("green");
-		rect(-200, 100, dimRect, 20);
+		rect(-100, 100, 200, 20);
+		fill("#696a6d");
+		rect(-100, 100, dimRect, 20);
 		dimRect += 1;
 		pop();
-	if (dimRect == 10) {
+	
+	//results
+	if (dimRect == 210) {
 		start = false;
 
 		background(myBackground);
 		imageMode(CENTER);
+
 		imageChoice = floor(random(0, 9));
 	 	image(template[imageChoice], 0, 0, template[imageChoice].width/2 + 100, template[imageChoice].height/2 + 100);
 
@@ -82,8 +93,13 @@ function draw() {
 		button2.position(width/2 - 150, 220);
 		button2.mousePressed(writeName);
 
+		fill("#4c402e");
+		sToSave = text("Press 'S' to save your poster", 0, -height/2.3);
+
   		scale(-1, 1);
   		image(myCapture, 0, 0, myCapture.width/3, myCapture.height/3);
+
+		song.play();
 	}
 	}	
 }
@@ -91,6 +107,8 @@ function draw() {
 function change() {
 	start = true;
 }
+
+//create the input for the name
 function writeName() {
 	button2.remove();
 	input = createInput();
@@ -98,6 +116,7 @@ function writeName() {
 		 input.size(300, 20)
 }
 
+//write the input when enter is pressed
 function keyPressed() {
 	if (keyCode === ENTER) {
 		console.log("yes");
@@ -110,4 +129,9 @@ function keyPressed() {
 		text(name, 0, -100);
 		input.hide();
 	}
+
+	//save out to a file
+	if (key == 's') {
+		save('wanted.png');
+	  }
 }
